@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F5F5F5;
+    color: #0D0D0D;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  input, textarea, select {
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full bg-white border border-brand-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-brand-black 
+           placeholder-brand-gray-400 outline-none transition-all duration-200
+           hover:border-brand-gray-400
+           focus:border-brand-red focus:shadow-input-focus;
+  }
+
+  .label-text {
+    @apply block text-xs font-600 text-brand-gray-600 uppercase tracking-wider mb-1.5;
+  }
+
+  .section-card {
+    @apply bg-white rounded-xl border border-brand-gray-200 overflow-hidden;
+  }
+
+  .section-header {
+    @apply px-6 py-4 border-b border-brand-gray-100 flex items-center gap-2.5;
+  }
+
+  .section-body {
+    @apply p-6;
+  }
+
+  .btn-primary {
+    @apply bg-brand-red text-white font-600 text-sm px-6 py-2.5 rounded-lg 
+           transition-all duration-200 hover:bg-brand-red-dark active:scale-95
+           flex items-center gap-2 shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-brand-gray-600 font-500 text-sm px-6 py-2.5 rounded-lg border border-brand-gray-200
+           transition-all duration-200 hover:border-brand-gray-400 hover:text-brand-black active:scale-95
+           flex items-center gap-2;
+  }
+
+  .table-th {
+    @apply text-xs font-600 text-brand-gray-600 uppercase tracking-wider py-3 px-4 text-left bg-brand-gray-50;
+  }
+
+  .table-td {
+    @apply py-2.5 px-3;
+  }
+
+  .animate-row-in {
+    animation: rowSlideIn 0.25s ease forwards;
+  }
+}
+
+@keyframes rowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F0F0F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #D0D0D0;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AAAAAA;
+}
+
+/* Number input no arrows */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
