@@ -15,10 +15,7 @@ const INITIAL_FORM = {
   tipoMercaderia: '',
   pesoKg: '',
   observaciones: '',
-<<<<<<< HEAD
   imagenes: [],
-=======
->>>>>>> 3967be2194db01a654a2bd9f348a65e57b0fe730
 }
 
 function validate(values) {
