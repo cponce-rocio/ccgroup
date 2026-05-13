@@ -5,6 +5,11 @@ import * as XLSX from 'xlsx'
  * con dos hojas: "Operación" y "Adicionales"
  */
 export function exportToExcel({ form, rows }) {
+  // Validar que hay datos
+  if (!form.idOperacion || !form.nroContenedor || !form.cliente) {
+    throw new Error('Completa los campos requeridos antes de exportar')
+  }
+
   const wb = XLSX.utils.book_new()
 
   // ══════════════════════════════════════════
@@ -16,13 +21,11 @@ export function exportToExcel({ form, rows }) {
     ['', '', '', ''],
     ['DATOS DE LA OPERACIÓN', '', '', ''],
     ['Campo', 'Valor', '', ''],
-    ['Número de Contenedor', form.nroContenedor, '', ''],
-    ['ID Operación', form.idOperacion, '', ''],
-    ['Fecha', form.fecha, '', ''],
-    ['Cliente', form.cliente, '', ''],
-    ['Booking', form.booking, '', ''],
-    ['Tipo de Mercadería', form.tipoMercaderia, '', ''],
-    ['Peso (kg)', form.pesoKg ? Number(form.pesoKg) : '', '', ''],
+    ['Número de Contenedor', form.nroContenedor || '', '', ''],
+    ['ID Operación', form.idOperacion || '', '', ''],
+    ['Fecha', form.fecha || new Date().toISOString().split('T')[0], '', ''],
+    ['Cliente', form.cliente || '', '', ''],
+    ['Booking', form.booking || 'N/A', '', ''],
     ['', '', '', ''],
     ['OBSERVACIONES', '', '', ''],
     [form.observaciones || '(Sin observaciones)', '', '', ''],
@@ -57,7 +60,7 @@ export function exportToExcel({ form, rows }) {
   // ══════════════════════════════════════════
   const encabezado = [
     ['CC GROUP ARGENTINA — Servicios Adicionales', '', '', '', ''],
-    [`Operación: ${form.idOperacion} | Cliente: ${form.cliente} | Fecha: ${form.fecha}`, '', '', '', ''],
+    [`Operación: ${form.idOperacion} | Cliente: ${form.cliente} | Fecha: ${form.fecha || 'N/A'}`, '', '', '', ''],
     ['', '', '', '', ''],
     ['#', 'Ítem', 'Adicional', 'Cantidad', 'Costo Unit. (ARS)', 'Subtotal (ARS)'],
   ]
@@ -111,7 +114,35 @@ export function exportToExcel({ form, rows }) {
     })
   })
 
+  // Formato para la fila de total
+  const totalRow = startRow + rows.length
+  const totalRef = `F${totalRow}`
+  if (ws2[totalRef]) {
+    ws2[totalRef].z = numFmt
+    ws2[totalRef].t = 'n'
+    ws2[totalRef].s = { font: { bold: true } }
+  }
+
   XLSX.utils.book_append_sheet(wb, ws2, 'Adicionales')
+
+  // ══════════════════════════════════════════
+  // HOJA 3: Resumen
+  // ══════════════════════════════════════════
+  const resumenData = [
+    ['RESUMEN DE OPERACIÓN', '', ''],
+    ['', '', ''],
+    ['Contenedor:', form.nroContenedor, ''],
+    ['Operación:', form.idOperacion, ''],
+    ['Cliente:', form.cliente, ''],
+    ['Fecha:', form.fecha, ''],
+    ['Booking:', form.booking || 'N/A', ''],
+    ['', '', ''],
+    ['Total Adicionales:', total, ''],
+  ]
+
+  const ws3 = XLSX.utils.aoa_to_sheet(resumenData)
+  ws3['!cols'] = [{ wch: 20 }, { wch: 30 }, { wch: 20 }]
+  XLSX.utils.book_append_sheet(wb, ws3, 'Resumen')
 
   // ══════════════════════════════════════════
   // Generar nombre de archivo y descargar
@@ -120,5 +151,12 @@ export function exportToExcel({ form, rows }) {
   const idOp = form.idOperacion.replace(/[^a-zA-Z0-9-_]/g, '') || 'operacion'
   const fileName = `CCGroup_${idOp}_${fecha}.xlsx`
 
-  XLSX.writeFile(wb, fileName)
+  try {
+    XLSX.writeFile(wb, fileName)
+    console.log(`✅ Archivo exportado exitosamente: ${fileName}`)
+    return fileName
+  } catch (error) {
+    console.error('❌ Error al exportar a Excel:', error)
+    throw new Error('No se pudo exportar el archivo. Verifica los datos e intenta de nuevo.')
+  }
 }

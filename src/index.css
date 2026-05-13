@@ -3,16 +3,34 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    height: 100%;
+  }
+
   * {
     box-sizing: border-box;
   }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background-color: #F5F5F5;
+    background-image: url('/puerto-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: #0D0D0D;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.97);
   }
 
   input, textarea, select {
@@ -37,17 +55,17 @@
   }
 
   .section-header {
-    @apply px-6 py-4 border-b border-brand-gray-100 flex items-center gap-2.5;
+    @apply px-4 sm:px-6 py-4 border-b border-brand-gray-100 flex items-center gap-2.5;
   }
 
   .section-body {
-    @apply p-6;
+    @apply p-4 sm:p-6;
   }
 
   .btn-primary {
     @apply bg-brand-red text-white font-600 text-sm px-6 py-2.5 rounded-lg 
            transition-all duration-200 hover:bg-brand-red-dark active:scale-95
-           flex items-center gap-2 shadow-sm hover:shadow-md;
+           flex items-center gap-2 shadow-sm hover:shadow-md whitespace-nowrap;
   }
 
   .btn-secondary {
@@ -104,4 +122,48 @@ input[type='number']::-webkit-outer-spin-button {
 }
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+/* Smooth animations */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .input-field {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .btn-primary, .btn-secondary {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .section-header, .section-body {
+    @apply px-4 py-3;
+  }
+}
+
+@media (max-width: 640px) {
+  .btn-primary, .btn-secondary {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.625rem;
+  }
+  
+  .section-header, .section-body {
+    @apply px-3 py-2;
+  }
+  
+  table {
+    font-size: 0.75rem;
+  }
+  
+  .table-th, .table-td {
+    @apply px-2 py-2;
+  }
 }

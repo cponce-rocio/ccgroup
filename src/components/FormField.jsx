@@ -48,16 +48,16 @@ export function Select({ error, children, ...props }) {
 
 export function SectionCard({ icon, title, badge, children }) {
   return (
-    <div className="section-card shadow-card animate-fade-up">
-      <div className="section-header">
+    <div className="section-card shadow-card animate-fade-up hover:shadow-lg transition-shadow duration-300">
+      <div className="section-header bg-gradient-to-r from-blue-50 to-transparent">
         {icon && (
-          <span className="w-7 h-7 rounded-md bg-brand-red/10 flex items-center justify-center text-brand-red">
+          <span className="w-7 h-7 rounded-md bg-brand-red/10 flex items-center justify-center text-brand-red flex-shrink-0">
             {icon}
           </span>
         )}
-        <h3 className="font-600 text-sm text-brand-black">{title}</h3>
+        <h3 className="font-600 text-sm text-brand-black truncate">{title}</h3>
         {badge && (
-          <span className="ml-auto text-xs bg-brand-gray-100 text-brand-gray-600 px-2 py-0.5 rounded-full font-500">
+          <span className="ml-auto text-xs bg-brand-gray-100 text-brand-gray-600 px-2 py-0.5 rounded-full font-500 flex-shrink-0">
             {badge}
           </span>
         )}

@@ -15,14 +15,14 @@ export default function OperationForm({ values, onChange, errors }) {
         title="Información de la Operación"
         badge="Requerido"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <FormField label="Número de Contenedor" required error={errors.nroContenedor}>
             <Input
               placeholder="MSCU1234567"
               value={values.nroContenedor}
               onChange={handleChange('nroContenedor')}
               error={errors.nroContenedor}
-              className="font-mono"
+              className="font-mono text-xs sm:text-sm"
             />
           </FormField>
 
@@ -32,6 +32,7 @@ export default function OperationForm({ values, onChange, errors }) {
               value={values.idOperacion}
               onChange={handleChange('idOperacion')}
               error={errors.idOperacion}
+              className="text-xs sm:text-sm"
             />
           </FormField>
 
@@ -41,6 +42,7 @@ export default function OperationForm({ values, onChange, errors }) {
               value={values.fecha}
               onChange={handleChange('fecha')}
               error={errors.fecha}
+              className="text-xs sm:text-sm"
             />
           </FormField>
         </div>
@@ -55,6 +57,7 @@ export default function OperationForm({ values, onChange, errors }) {
               value={values.cliente}
               onChange={handleChange('cliente')}
               error={errors.cliente}
+              className="text-xs sm:text-sm"
             />
           </FormField>
 
@@ -64,6 +67,7 @@ export default function OperationForm({ values, onChange, errors }) {
               value={values.booking}
               onChange={handleChange('booking')}
               error={errors.booking}
+              className="text-xs sm:text-sm"
             />
           </FormField>
         </div>
