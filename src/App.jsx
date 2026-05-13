@@ -71,16 +71,34 @@ export default function App() {
     console.log('Operación guardada:', { ...form, adicionales: rows })
     setToast({ message: `Operación ${form.idOperacion} guardada exitosamente.`, type: 'success' })
   }
-
-  const handleExport = () => {
-    try {
-      exportToExcel({ form, rows })
-      setToast({ message: 'Excel exportado correctamente.', type: 'success' })
-    } catch (e) {
-      setToast({ message: 'Error al exportar. Intentá de nuevo.', type: 'error' })
+const handleExport = () => {
+  try {
+    // Validación preventiva
+    if (!form.idOperacion || form.idOperacion.trim() === '') {
+      setToast({ 
+        message: 'Debe ingresar un ID de Operación para poder exportar.', 
+        type: 'error' 
+      });
+      return;
     }
-  }
 
+    // Llamada a la utilidad
+    exportToExcel({ form, rows });
+
+    setToast({ 
+      message: 'Archivo Excel generado correctamente.', 
+      type: 'success' 
+    });
+
+  } catch (error) {
+    console.error("Error en el componente App:", error);
+    // Aquí el error ya no será "total is not defined" porque lo corregimos arriba
+    setToast({ 
+      message: 'No se pudo exportar: ' + error.message, 
+      type: 'error' 
+    });
+  }
+}
   const handleCancel = () => {
     if (window.confirm('¿Descartar todos los cambios?')) {
       setForm(INITIAL_FORM)
