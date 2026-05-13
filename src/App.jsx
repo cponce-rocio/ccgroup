@@ -85,7 +85,7 @@ export default function App() {
       <Header />
 
       {/* Page title bar */}
-      <div className="bg-white/95 backdrop-blur border-b border-slate-200">
+      <div className="bg-white/80 backdrop-blur border-b border-slate-200/50">
         <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-sm text-brand-gray-400">
             <span>Operaciones</span>
@@ -138,7 +138,7 @@ export default function App() {
       <main className="flex-1 w-full mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         <div className="max-w-[1100px] mx-auto w-full">
           <div 
-            className="rounded-xl shadow-lg p-5 sm:p-6 md:p-8 flex flex-col gap-5 bg-white border border-blue-100/50 hover:shadow-xl transition-shadow duration-300"
+            className="rounded-xl shadow-lg p-5 sm:p-6 md:p-8 flex flex-col gap-5 bg-white/92 border border-blue-100/30 hover:shadow-xl transition-shadow duration-300"
           >
             <OperationForm
               values={form}

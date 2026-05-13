@@ -59,45 +59,28 @@ export function exportToExcel({ form, rows }) {
   // HOJA 2: Servicios Adicionales
   // ══════════════════════════════════════════
   const encabezado = [
-    ['CC GROUP ARGENTINA — Servicios Adicionales', '', '', '', ''],
-    [`Operación: ${form.idOperacion} | Cliente: ${form.cliente} | Fecha: ${form.fecha || 'N/A'}`, '', '', '', ''],
-    ['', '', '', '', ''],
-    ['#', 'Ítem', 'Adicional', 'Cantidad', 'Costo Unit. (ARS)', 'Subtotal (ARS)'],
+    ['CC GROUP ARGENTINA — Servicios Adicionales', '', ''],
+    [`Operación: ${form.idOperacion} | Cliente: ${form.cliente} | Fecha: ${form.fecha || 'N/A'}`, '', ''],
+    ['', '', ''],
+    ['#', 'Adicional', 'Cantidad'],
   ]
 
   const filas = rows.map((row, idx) => {
     const qty = parseFloat(row.cantidad) || 0
-    const cost = parseFloat(row.costo) || 0
     return [
       idx + 1,
-      row.item || '',
       row.adicional || '',
       qty,
-      cost,
-      qty * cost,
     ]
   })
 
-  // Fila de total
-  const total = rows.reduce((acc, r) => {
-    return acc + (parseFloat(r.cantidad) || 0) * (parseFloat(r.costo) || 0)
-  }, 0)
-
-  const filasConTotal = [
-    ...filas,
-    ['', '', '', '', 'TOTAL', total],
-  ]
-
-  const adicionalesData = [...encabezado, ...filasConTotal]
+  const adicionalesData = [...encabezado, ...filas]
   const ws2 = XLSX.utils.aoa_to_sheet(adicionalesData)
 
   ws2['!cols'] = [
     { wch: 5 },
-    { wch: 30 },
-    { wch: 20 },
-    { wch: 12 },
-    { wch: 20 },
-    { wch: 20 },
+    { wch: 40 },
+    { wch: 15 },
   ]
 
   // Formato numérico para columnas de costo y subtotal
