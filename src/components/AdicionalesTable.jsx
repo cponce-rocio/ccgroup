@@ -9,6 +9,7 @@ const ADICIONALES_OPTIONS = [
   'Forrado de contenedor',
   'Zunchado',
   'VGM',
+  'Control de la Temp Carga'
 ]
 
 export default function AdicionalesTable({ rows, onChange }) {
